@@ -1,0 +1,15 @@
+[Unit]
+Description=SignalDesk noVNC/websockify bridge
+After=signaldesk-x11vnc.service
+Requires=signaldesk-x11vnc.service
+
+[Service]
+Type=simple
+User=signaldesk
+Group=signaldesk
+ExecStart=/usr/bin/websockify --web=/usr/share/novnc/ 6080 127.0.0.1:5900
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

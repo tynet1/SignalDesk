@@ -1,0 +1,16 @@
+[Unit]
+Description=SignalDesk x11vnc server
+After=signaldesk-xvfb.service
+Requires=signaldesk-xvfb.service
+
+[Service]
+Type=simple
+User=signaldesk
+Group=signaldesk
+Environment=DISPLAY=:99
+ExecStart=/usr/bin/x11vnc -display :99 -forever -shared -rfbauth /etc/signaldesk/vnc.pass -rfbport 5900 -listen 127.0.0.1
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

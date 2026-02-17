@@ -1,0 +1,16 @@
+[Unit]
+Description=SignalDesk window manager (fluxbox)
+After=signaldesk-xvfb.service
+Requires=signaldesk-xvfb.service
+
+[Service]
+Type=simple
+User=signaldesk
+Group=signaldesk
+Environment=DISPLAY=:99
+ExecStart=/usr/bin/fluxbox
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

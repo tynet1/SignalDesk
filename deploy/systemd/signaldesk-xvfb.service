@@ -1,0 +1,15 @@
+[Unit]
+Description=SignalDesk virtual display (Xvfb)
+After=network.target
+
+[Service]
+Type=simple
+User=signaldesk
+Group=signaldesk
+Environment=DISPLAY=:99
+ExecStart=/usr/bin/Xvfb :99 -screen 0 1920x1080x24 -nolisten tcp
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
