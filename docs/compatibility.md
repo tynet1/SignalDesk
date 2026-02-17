@@ -12,6 +12,7 @@
 - At least 4 GB RAM (8+ GB recommended for larger systems)
 - Stable USB bus for SDR dongles
 - Java runtime (bundled runtime preferred)
+- GTK runtime libraries for JavaFX (`libgtk-3-0` and related X11 libs)
 
 ## High-impact pitfalls
 
@@ -27,7 +28,11 @@
 - Symptom: wrong tuner assigned, decode failures
 - Fix: set unique SDR serial numbers and map them predictably
 
-4. Audio/status expectations mismatched
+4. RTL dongle claimed by DVB kernel driver
+- Symptom: dongle appears in USB list but SDR software cannot use it
+- Fix: blacklist `dvb_usb_rtl28xxu`, `rtl2832`, `rtl2830`; verify with `bash scripts/check_rtl_sdr.sh`
+
+5. Audio/status expectations mismatched
 - Symptom: VNC works, but no browser-native audio/status
 - Fix: configure SDRTrunk stream outputs and wire to a dedicated local web audio/status service
 

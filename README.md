@@ -13,8 +13,10 @@ SignalDesk is a Debian-first deployment blueprint for running SDRTrunk headless 
 - `scripts/download_sdrtrunk.sh`: fetches and unpacks a pinned SDRTrunk release
 - `scripts/sdrtrunk-launch.sh`: stable launch wrapper for SDRTrunk on virtual display
 - `scripts/set_vnc_password.sh`: set/rotate VNC password
+- `scripts/check_rtl_sdr.sh`: validates RTL-SDR dongle visibility and driver handoff
 - `deploy/systemd/*.service`: production-friendly service units
 - `docs/`: compatibility checks and bring-up runbook
+- `CHANGELOG.md`: deployment-relevant changes and fixes
 
 ## Quick start
 
@@ -45,6 +47,12 @@ sudo bash scripts/install_systemd_units.sh
 5. Access over Tailscale:
 
 - noVNC URL: `http://<tailscale-ip>:6080/vnc.html`
+
+6. Validate SDR dongles:
+
+```bash
+bash scripts/check_rtl_sdr.sh
+```
 
 ## Service layout
 

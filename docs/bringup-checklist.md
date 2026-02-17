@@ -41,7 +41,7 @@ systemctl --no-pager --full status signaldesk-xvfb.service signaldesk-fluxbox.se
 1. Confirm SDRs visible:
 
 ```bash
-rtl_test -t
+bash scripts/check_rtl_sdr.sh
 ```
 
 2. Configure tuners/systems in SDRTrunk.

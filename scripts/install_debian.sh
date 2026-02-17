@@ -24,7 +24,18 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y \
   ca-certificates \
   procps \
   usbutils \
-  rtl-sdr
+  rtl-sdr \
+  libusb-1.0-0 \
+  libgtk-3-0 \
+  libglib2.0-0 \
+  libx11-6 \
+  libxext6 \
+  libxrender1 \
+  libxtst6 \
+  libxi6 \
+  libxrandr2 \
+  libxfixes3 \
+  libasound2
 
 echo "[2/5] Creating user/group..."
 if ! getent group "${SIGNALDESK_GROUP}" >/dev/null 2>&1; then
@@ -38,6 +49,7 @@ if ! id -u "${SIGNALDESK_USER}" >/dev/null 2>&1; then
     --shell /usr/sbin/nologin \
     "${SIGNALDESK_USER}"
 fi
+usermod -aG plugdev "${SIGNALDESK_USER}" || true
 
 echo "[3/5] Creating directories..."
 install -d -m 0755 -o "${SIGNALDESK_USER}" -g "${SIGNALDESK_GROUP}" "${SIGNALDESK_HOME}"
@@ -45,6 +57,14 @@ install -d -m 0755 -o "${SIGNALDESK_USER}" -g "${SIGNALDESK_GROUP}" "${SIGNALDES
 install -d -m 0755 -o "${SIGNALDESK_USER}" -g "${SIGNALDESK_GROUP}" "${SIGNALDESK_HOME}/logs"
 install -d -m 0755 -o root -g root "${SIGNALDESK_INSTALL_DIR}"
 install -d -m 0750 -o root -g "${SIGNALDESK_GROUP}" /etc/signaldesk
+
+# Prevent kernel DVB drivers from claiming RTL dongles needed by rtl-sdr.
+cat > /etc/modprobe.d/blacklist-rtl-sdr.conf <<'EOF'
+blacklist dvb_usb_rtl28xxu
+blacklist rtl2832
+blacklist rtl2830
+EOF
+modprobe -r dvb_usb_rtl28xxu rtl2832 rtl2830 2>/dev/null || true
 
 echo "[4/5] Creating initial VNC password file..."
 if [[ ! -f /etc/signaldesk/vnc.pass ]]; then
