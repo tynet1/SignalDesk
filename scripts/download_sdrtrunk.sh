@@ -21,5 +21,6 @@ echo "Unpacking to ${SIGNALDESK_INSTALL_DIR}/sdrtrunk"
 rm -rf "${SIGNALDESK_INSTALL_DIR}/sdrtrunk"
 unzip -q "${TMP_ZIP}" -d "${SIGNALDESK_INSTALL_DIR}/sdrtrunk"
 chown -R "${SIGNALDESK_USER}:${SIGNALDESK_GROUP}" "${SIGNALDESK_INSTALL_DIR}/sdrtrunk"
+rm -f "${TMP_ZIP}"
 
 echo "Installed SDRTrunk ${SDRTRUNK_VERSION}"

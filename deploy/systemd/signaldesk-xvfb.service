@@ -8,8 +8,13 @@ User=signaldesk
 Group=signaldesk
 Environment=DISPLAY=:99
 ExecStart=/usr/bin/Xvfb :99 -screen 0 1920x1080x24 -nolisten tcp
+# Wait until the X11 socket is actually ready before downstream services start
+ExecStartPost=/bin/sh -c 'for i in $(seq 1 20); do [ -e /tmp/.X11-unix/X99 ] && exit 0; sleep 0.5; done; echo "Xvfb socket never appeared"; exit 1'
 Restart=always
 RestartSec=2
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=signaldesk-xvfb
 
 [Install]
 WantedBy=multi-user.target

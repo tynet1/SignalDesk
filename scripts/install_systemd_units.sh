@@ -8,6 +8,17 @@ fi
 
 REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 INSTALL_DIR="${SIGNALDESK_INSTALL_DIR:-/opt/signaldesk}"
+SIGNALDESK_USER="${SIGNALDESK_USER:-signaldesk}"
+
+if ! id -u "${SIGNALDESK_USER}" >/dev/null 2>&1; then
+  echo "Error: user '${SIGNALDESK_USER}' not found. Run install_debian.sh first."
+  exit 1
+fi
+
+if [[ ! -f /etc/signaldesk/vnc.pass ]]; then
+  echo "Error: /etc/signaldesk/vnc.pass not found. Run install_debian.sh first."
+  exit 1
+fi
 
 echo "[1/3] Installing runtime scripts..."
 install -d -m 0755 -o root -g root "${INSTALL_DIR}/scripts"

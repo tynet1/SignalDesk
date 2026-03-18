@@ -64,7 +64,9 @@ blacklist dvb_usb_rtl28xxu
 blacklist rtl2832
 blacklist rtl2830
 EOF
-modprobe -r dvb_usb_rtl28xxu rtl2832 rtl2830 2>/dev/null || true
+if ! modprobe -r dvb_usb_rtl28xxu rtl2832 rtl2830 2>/dev/null; then
+  echo "Note: could not unload RTL-SDR kernel modules (may not be loaded — that's fine)."
+fi
 
 echo "[4/5] Creating initial VNC password file..."
 if [[ ! -f /etc/signaldesk/vnc.pass ]]; then
