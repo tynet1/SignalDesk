@@ -12,6 +12,9 @@ Environment=HOME=/var/lib/signaldesk
 ExecStart=/bin/bash /opt/signaldesk/scripts/sdrtrunk-launch.sh
 Restart=on-failure
 RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=signaldesk-sdrtrunk
 
 [Install]
 WantedBy=multi-user.target

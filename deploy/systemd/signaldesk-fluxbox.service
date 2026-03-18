@@ -11,6 +11,9 @@ Environment=DISPLAY=:99
 ExecStart=/usr/bin/fluxbox
 Restart=always
 RestartSec=2
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=signaldesk-fluxbox
 
 [Install]
 WantedBy=multi-user.target
